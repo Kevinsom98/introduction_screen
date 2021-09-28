@@ -24,58 +24,52 @@ class IntroContent extends StatelessWidget {
     //           )
     //       : null,
 
-    return SafeArea(
-      bottom: false,
-      top: false,
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            //image code
-            Image.network(
-              'https://guyanatourism.com/wp-content/uploads/2019/07/Lethem-trail-scaled.jpg',
-            ),
-            //gradient
-            Container(
-              // height: 50,
-              width: double.infinity,
-              decoration: new BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black38,
-                    Colors.black26,
-                    // Colors.indigo,
-                  ],
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: page.decoration.titlePadding,
-                  child: _buildWidget(
-                    page.titleWidget,
-                    page.title,
-                    page.decoration.titleTextStyle,
-                  ),
-                ),
-                Padding(
-                  padding: page.decoration.descriptionPadding,
-                  child: _buildWidget(
-                    page.bodyWidget,
-                    page.body,
-                    page.decoration.bodyTextStyle,
-                  ),
-                ),
-                if (page.footer != null)
-                  Padding(
-                    padding: page.decoration.footerPadding,
-                    child: page.footer,
-                  ),
+    return Stack(
+      children: <Widget>[
+        //image code
+        Image.network(
+          'https://guyanatourism.com/wp-content/uploads/2019/07/Lethem-trail-scaled.jpg',
+        ),
+        //gradient
+        Container(
+          // height: 50,
+          width: double.infinity,
+          decoration: new BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.black38,
+                Colors.black26,
+                // Colors.indigo,
               ],
             ),
+          ),
+        ),
+        Column(
+          children: [
+            Padding(
+              padding: page.decoration.titlePadding,
+              child: _buildWidget(
+                page.titleWidget,
+                page.title,
+                page.decoration.titleTextStyle,
+              ),
+            ),
+            Padding(
+              padding: page.decoration.descriptionPadding,
+              child: _buildWidget(
+                page.bodyWidget,
+                page.body,
+                page.decoration.bodyTextStyle,
+              ),
+            ),
+            if (page.footer != null)
+              Padding(
+                padding: page.decoration.footerPadding,
+                child: page.footer,
+              ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
