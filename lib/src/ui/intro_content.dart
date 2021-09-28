@@ -14,62 +14,59 @@ class IntroContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: page.decoration.contentMargin,
-      decoration: isFullScreen
-          ? page.decoration.boxDecoration ??
-              BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new NetworkImage(
-                          "https://guyanatourism.com/wp-content/uploads/2019/07/Lethem-trail-scaled.jpg")))
-          : null,
-
-      // return Stack(
-      //   children: <Widget>[
-      //     //image code
-      //     Image.network(
-      //       'https://guyanatourism.com/wp-content/uploads/2019/07/Lethem-trail-scaled.jpg',
-      //     ),
-      //     //gradient
-      //     Container(
-      //       // height: 50,
-      //       width: double.infinity,
-      //       decoration: new BoxDecoration(
-      //         gradient: LinearGradient(
-      //           colors: [
-      //             Colors.black38,
-      //             Colors.black26,
-      //             // Colors.indigo,
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-
-      child: Column(
-        children: [
-          Padding(
-            padding: page.decoration.titlePadding,
-            child: _buildWidget(
-              page.titleWidget,
-              page.title,
-              page.decoration.titleTextStyle,
+    return SafeArea(
+      bottom: false,
+      top: false,
+      child: Container(
+        child: Stack(children: <Widget>[
+          //image code
+          Image.network(
+            'https://guyanatourism.com/wp-content/uploads/2019/07/Lethem-trail-scaled.jpg',
+          ),
+          //gradient
+          Container(
+            // height: 50,
+            width: double.infinity,
+            decoration: new BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black38,
+                  Colors.black26,
+                  // Colors.indigo,
+                ],
+              ),
             ),
           ),
-          Padding(
-            padding: page.decoration.descriptionPadding,
-            child: _buildWidget(
-              page.bodyWidget,
-              page.body,
-              page.decoration.bodyTextStyle,
+
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Padding(
+                  padding: page.decoration.titlePadding,
+                  child: _buildWidget(
+                    page.titleWidget,
+                    page.title,
+                    page.decoration.titleTextStyle,
+                  ),
+                ),
+                Padding(
+                  padding: page.decoration.descriptionPadding,
+                  child: _buildWidget(
+                    page.bodyWidget,
+                    page.body,
+                    page.decoration.bodyTextStyle,
+                  ),
+                ),
+                if (page.footer != null)
+                  Padding(
+                    padding: page.decoration.footerPadding,
+                    child: page.footer,
+                  ),
+              ],
             ),
           ),
-          if (page.footer != null)
-            Padding(
-              padding: page.decoration.footerPadding,
-              child: page.footer,
-            ),
-        ],
+        ]),
       ),
     );
   }
