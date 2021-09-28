@@ -305,89 +305,98 @@ class IntroductionScreenState extends State<IntroductionScreen> {
       color: widget.doneColor ?? widget.color,
       onPressed: widget.showDoneButton && !_isScrolling ? widget.onDone : null,
     );
+    return Stack(children: <Widget>[
+      Image.network(
+        "https://guyanatourism.com/wp-content/uploads/2019/07/Lethem-trail-scaled.jpg",
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.cover,
+      ),
+      Scaffold(
+        // backgroundColor: widget.globalBackgroundColor,
 
-    return Scaffold(
-      backgroundColor: widget.globalBackgroundColor,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: NotificationListener<ScrollNotification>(
-              onNotification: _onScroll,
-              child: PageView(
-                reverse: widget.rtl,
-                scrollDirection: widget.pagesAxis,
-                controller: _pageController,
-                onPageChanged: widget.onChange,
-                physics: widget.freeze
-                    ? const NeverScrollableScrollPhysics()
-                    : widget.scrollPhysics,
-                children: widget.pages != null
-                    ? widget.pages!
-                        .map((p) => IntroPage(
-                              page: p,
-                              scrollController: widget.scrollController,
-                              isTopSafeArea: widget.isTopSafeArea,
-                              isBottomSafeArea: widget.isBottomSafeArea,
-                            ))
-                        .toList()
-                    : widget.rawPages!,
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: NotificationListener<ScrollNotification>(
+                onNotification: _onScroll,
+                child: PageView(
+                  reverse: widget.rtl,
+                  scrollDirection: widget.pagesAxis,
+                  controller: _pageController,
+                  onPageChanged: widget.onChange,
+                  physics: widget.freeze
+                      ? const NeverScrollableScrollPhysics()
+                      : widget.scrollPhysics,
+                  children: widget.pages != null
+                      ? widget.pages!
+                          .map((p) => IntroPage(
+                                page: p,
+                                scrollController: widget.scrollController,
+                                isTopSafeArea: widget.isTopSafeArea,
+                                isBottomSafeArea: widget.isBottomSafeArea,
+                              ))
+                          .toList()
+                      : widget.rawPages!,
+                ),
               ),
             ),
-          ),
-          if (widget.globalHeader != null)
+            if (widget.globalHeader != null)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: widget.globalHeader!,
+              ),
             Positioned(
-              top: 0,
+              bottom: 0,
               left: 0,
               right: 0,
-              child: widget.globalHeader!,
-            ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                Container(
-                  padding: widget.controlsPadding,
-                  margin: widget.controlsMargin,
-                  decoration: widget.dotsContainerDecorator,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: widget.skipFlex,
-                        child: _toggleBtn(skipBtn, isSkipBtn),
-                      ),
-                      Expanded(
-                        flex: widget.dotsFlex,
-                        child: Center(
-                          child: widget.isProgress
-                              ? DotsIndicator(
-                                  reversed: widget.rtl,
-                                  dotsCount: getPagesLength(),
-                                  position: _currentPage,
-                                  decorator: widget.dotsDecorator,
-                                  onTap: widget.isProgressTap && !widget.freeze
-                                      ? (pos) => animateScroll(pos.toInt())
-                                      : null,
-                                )
-                              : const SizedBox(),
+              child: Column(
+                children: [
+                  Container(
+                    padding: widget.controlsPadding,
+                    margin: widget.controlsMargin,
+                    decoration: widget.dotsContainerDecorator,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: widget.skipFlex,
+                          child: _toggleBtn(skipBtn, isSkipBtn),
                         ),
-                      ),
-                      Expanded(
-                        flex: widget.nextFlex,
-                        child: isLastPage
-                            ? _toggleBtn(doneBtn, widget.showDoneButton)
-                            : _toggleBtn(nextBtn, widget.showNextButton),
-                      ),
-                    ].asReversed(widget.rtl),
+                        Expanded(
+                          flex: widget.dotsFlex,
+                          child: Center(
+                            child: widget.isProgress
+                                ? DotsIndicator(
+                                    reversed: widget.rtl,
+                                    dotsCount: getPagesLength(),
+                                    position: _currentPage,
+                                    decorator: widget.dotsDecorator,
+                                    onTap: widget.isProgressTap &&
+                                            !widget.freeze
+                                        ? (pos) => animateScroll(pos.toInt())
+                                        : null,
+                                  )
+                                : const SizedBox(),
+                          ),
+                        ),
+                        Expanded(
+                          flex: widget.nextFlex,
+                          child: isLastPage
+                              ? _toggleBtn(doneBtn, widget.showDoneButton)
+                              : _toggleBtn(nextBtn, widget.showNextButton),
+                        ),
+                      ].asReversed(widget.rtl),
+                    ),
                   ),
-                ),
-                if (widget.globalFooter != null) widget.globalFooter!
-              ],
+                  if (widget.globalFooter != null) widget.globalFooter!
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      )
+    ]);
   }
 }
